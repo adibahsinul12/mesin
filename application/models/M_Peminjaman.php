@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Peminjaman extends CI_Model {
 
+<<<<<<< HEAD
     public function __construct() {
         parent::__construct();
         $this->load->database();
@@ -152,10 +153,14 @@ class M_Peminjaman extends CI_Model {
     // =========================================================
     // 10. GET KATALOG ALAT
     // =========================================================
+=======
+    // 1. Mengambil semua data dari tabel alat untuk katalog
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
     public function get_katalog_alat() {
         return $this->db->get('alat')->result_array();
     }
 
+<<<<<<< HEAD
     // =========================================================
     // 11. GET STATISTIK PEMINJAM
     // =========================================================
@@ -163,6 +168,13 @@ class M_Peminjaman extends CI_Model {
         $now = date('Y-m-d H:i:s');
         
         // A. Aktif (disetujui & pending_kembali)
+=======
+    // 2. Menghitung statistik peminjaman milik mahasiswa/dosen yang sedang login (Real-time)
+    public function get_statistik_peminjam($id_user) {
+        $now = date('Y-m-d H:i:s');
+        
+        // A. Sedang Dipinjam (Aktif) -> Termasuk yang sedang diajukan pending_kembali
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         $this->db->select_sum('d.jumlah_pinjam');
         $this->db->from('detail_peminjaman d');
         $this->db->join('peminjaman p', 'p.id_peminjaman = d.id_peminjaman');
@@ -171,9 +183,16 @@ class M_Peminjaman extends CI_Model {
             $this->db->where('p.status_peminjaman', 'disetujui');
             $this->db->or_where('p.status_peminjaman', 'pending_kembali');
         $this->db->group_end();
+<<<<<<< HEAD
         $aktif = $this->db->get()->row_array()['jumlah_pinjam'];
 
         // B. Selesai
+=======
+        $this->db->where('p.tanggal_kembali_rencana >=', $now);
+        $aktif = $this->db->get()->row_array()['jumlah_pinjam'];
+
+        // B. Sudah Dikembalikan -> Status diubah menjadi selesai oleh petugas lab
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         $this->db->select_sum('d.jumlah_pinjam');
         $this->db->from('detail_peminjaman d');
         $this->db->join('peminjaman p', 'p.id_peminjaman = d.id_peminjaman');
@@ -181,7 +200,11 @@ class M_Peminjaman extends CI_Model {
         $this->db->where('p.status_peminjaman', 'selesai');
         $selesai = $this->db->get()->row_array()['jumlah_pinjam'];
 
+<<<<<<< HEAD
         // C. Terlambat
+=======
+        // C. Terlambat Keluar -> Lewat batas waktu, walaupun statusnya sudah pending_kembali (belum disetujui admin)
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         $this->db->select_sum('d.jumlah_pinjam');
         $this->db->from('detail_peminjaman d');
         $this->db->join('peminjaman p', 'p.id_peminjaman = d.id_peminjaman');
@@ -193,6 +216,7 @@ class M_Peminjaman extends CI_Model {
         $this->db->where('p.tanggal_kembali_rencana <', $now);
         $terlambat = $this->db->get()->row_array()['jumlah_pinjam'];
 
+<<<<<<< HEAD
         // D. Pending (menunggu persetujuan)
         $this->db->select_sum('d.jumlah_pinjam');
         $this->db->from('detail_peminjaman d');
@@ -347,5 +371,55 @@ class M_Peminjaman extends CI_Model {
         $this->db->order_by('peminjaman.id_peminjaman', 'DESC');
         $this->db->limit($limit, $offset);
         return $this->db->get()->result();
+=======
+        // Jika hasilnya NULL (belum pernah melakukan transaksi), otomatis ubah menjadi angka 0
+        return [
+            'aktif'     => $aktif ? $aktif : 0,
+            'selesai'   => $selesai ? $selesai : 0,
+            'terlambat' => $terlambat ? $terlambat : 0
+        ];
+    }
+
+    // 3. Mengambil data riwayat peminjaman lengkap dengan identitas nama & prodi peminjam (Permintaan Dosen)
+    public function get_riwayat_peminjam($id_user) {
+        // Menggabungkan tabel peminjaman, users, detail, dan alat
+        $this->db->select('
+            peminjaman.*, 
+            users.nama_lengkap, 
+            users.program_studi,
+            GROUP_CONCAT(CONCAT(alat.nama_alat, " (", detail_peminjaman.jumlah_pinjam, " unit)") SEPARATOR ", ") as daftar_alat
+        ');
+        $this->db->from('peminjaman');
+        $this->db->join('users', 'users.id_user = peminjaman.id_user');
+        $this->db->join('detail_peminjaman', 'detail_peminjaman.id_peminjaman = peminjaman.id_peminjaman');
+        $this->db->join('alat', 'alat.id_alat = detail_peminjaman.id_alat');
+        $this->db->where('peminjaman.id_user', $id_user);
+        $this->db->group_by('peminjaman.id_peminjaman');
+        $this->db->order_by('peminjaman.id_peminjaman', 'DESC'); // Urutkan dari transaksi terbaru
+        
+        return $this->db->get()->result_array();
+    }
+
+    // 4. DIUPDATE: Mengambil data instrumen yang berstatus 'disetujui' DAN 'pending_kembali'
+    public function get_peminjaman_aktif($id_user) {
+        $this->db->select('
+            peminjaman.*, 
+            GROUP_CONCAT(CONCAT(alat.nama_alat, " (", detail_peminjaman.jumlah_pinjam, " unit)") SEPARATOR ", ") as daftar_alat
+        ');
+        $this->db->from('peminjaman');
+        $this->db->join('detail_peminjaman', 'detail_peminjaman.id_peminjaman = peminjaman.id_peminjaman');
+        $this->db->join('alat', 'alat.id_alat = detail_peminjaman.id_alat');
+        $this->db->where('peminjaman.id_user', $id_user);
+        
+        // PERBAIKAN UTAMA: Menggunakan group_start & group_end agar menampung kedua status di view user
+        $this->db->group_start();
+            $this->db->where('peminjaman.status_peminjaman', 'disetujui');
+            $this->db->or_where('peminjaman.status_peminjaman', 'pending_kembali');
+        $this->db->group_end();
+        
+        $this->db->group_by('peminjaman.id_peminjaman');
+        
+        return $this->db->get()->result_array();
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
     }
 }

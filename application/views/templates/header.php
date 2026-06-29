@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title><?= $title ?? 'LABLOAN - Lab Mesin Poltesa' ?></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* RESET */
+=======
+    <title>Peminjaman - Lab Mesin Poltesa</title>
+    <style>
+        /* KUNCI PERBAIKAN: Reset margin bawaan browser agar layout nempel mentok */
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         html, body { 
             margin: 0; 
             padding: 0; 
@@ -17,7 +23,11 @@
 
         .wrapper { display: flex; flex: 1; min-height: 100vh; }
         
+<<<<<<< HEAD
         /* SIDEBAR */
+=======
+        /* Kunci posisi sidebar di sebelah kiri tanpa celah */
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         .sidebar { 
             width: 250px; 
             background: #222d32; 
@@ -32,6 +42,7 @@
             z-index: 1000; 
         }
         
+<<<<<<< HEAD
         .sidebar .profile {
             text-align: center;
             padding-bottom: 20px;
@@ -91,6 +102,13 @@
         }
         
         /* MAIN PANEL */
+=======
+        .sidebar h3 { text-align: center; margin-bottom: 25px; color: #3c8dbc; font-size: 18px; }
+        .sidebar a { display: block; color: #b8c7ce; padding: 12px 15px; text-decoration: none; border-radius: 4px; margin-bottom: 5px; font-size: 14px; }
+        .sidebar a:hover, .sidebar a.active { background: #1e282c; color: #fff; border-left: 3px solid #3c8dbc; }
+        
+        /* Geser panel utama pas di samping batas sidebar */
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         .main-panel { 
             flex: 1; 
             display: flex; 
@@ -101,7 +119,11 @@
             box-sizing: border-box;
         }
         
+<<<<<<< HEAD
         /* NAVBAR */
+=======
+        /* KUNCI PERBAIKAN: Navbar mentok ke atas layar (top: 0) & presisi di samping sidebar */
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         .navbar { 
             background: #fff; 
             padding: 15px 30px; 
@@ -117,6 +139,7 @@
             box-sizing: border-box;
             z-index: 999; 
         }
+<<<<<<< HEAD
         .navbar h4 {
             margin: 0;
             color: #333;
@@ -138,6 +161,10 @@
         }
         
         /* CONTENT */
+=======
+        
+        /* Jarak atas konten disesuaikan dengan tinggi navbar fixed */
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
         .content { 
             padding: 25px; 
             flex: 1; 
@@ -145,6 +172,7 @@
             box-sizing: border-box;
         }
         
+<<<<<<< HEAD
         /* CARD STAT */
         .card-stat {
             border-radius: 15px;
@@ -299,3 +327,13 @@
 
         <!-- CONTENT -->
         <div class="content">
+=======
+        .profile-card { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .btn-logout { background: #d9534f; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; font-size: 14px; }
+        .btn-logout:hover { background: #c9302c; }
+        footer { background: #fff; padding: 15px; text-align: center; font-size: 13px; color: #666; border-top: 1px solid #d2d6de; }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0

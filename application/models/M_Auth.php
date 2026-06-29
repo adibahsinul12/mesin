@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_Auth extends CI_Model {
 
+<<<<<<< HEAD
     public function __construct() {
         parent::__construct();
         $this->load->database();
@@ -122,4 +123,18 @@ class M_Auth extends CI_Model {
     public function count_all() {
         return $this->db->count_all('users');
     }
+=======
+    // KELOMPOK MODEL: Murni interaksi query database saja!
+
+    // 1. Mengambil data user berdasarkan nomor induk (NIM/NIDN)
+    public function cek_nomor_induk($nomor_induk) {
+        return $this->db->get_where('users', ['nomor_induk' => $nomor_induk])->row_array();
+    }
+
+    // 2. Menyimpan data registrasi (Baik mahasiswa maupun internal admin/kalab) ke dalam database
+    public function simpan_pendaftaran($data) {
+        return $this->db->insert('users', $data);
+    }
+
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
 }

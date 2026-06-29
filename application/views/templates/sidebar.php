@@ -26,6 +26,10 @@
         <a href="<?php echo base_url('admin/daftar_kembali'); ?>" class="<?php echo ($seg1 == 'admin' && $seg2 == 'daftar_kembali') ? 'active' : ''; ?>" style="display: flex; justify-content: space-between; align-items: center;">
             <span>Konfirmasi Pengembalian</span>
             <?php 
+<<<<<<< HEAD
+=======
+                // Hitung jumlah pengembalian berstatus pending secara real-time
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
                 $jumlah_pending = $this->db->get_where('peminjaman', ['status_peminjaman' => 'pending_kembali'])->num_rows();
                 if ($jumlah_pending > 0): 
             ?>
@@ -40,6 +44,7 @@
     <?php endif; ?>
 
     <?php if ($this->session->userdata('role') == 'kepala_lab') : ?>
+<<<<<<< HEAD
         <!-- ============================================= -->
         <!-- KEPALA LAB: LAPORAN + PROFIL -->
         <!-- ============================================= -->
@@ -49,6 +54,12 @@
         <a href="<?php echo base_url('kalab/profil'); ?>" class="<?php echo ($seg1 == 'kalab' && $seg2 == 'profil') ? 'active' : ''; ?>">
             <i class="fas fa-user-circle"></i> Profil Saya
         </a>
+=======
+        <a href="<?php echo base_url('kepalalab/dashboard'); ?>" class="<?php echo ($seg1 == 'kepalalab' && ($seg2 == 'dashboard' || $seg2 == '')) ? 'active' : ''; ?>">Dashboard Utama</a>
+        <a href="<?php echo base_url('admin/sirkulasi'); ?>" class="<?php echo ($seg1 == 'admin' && $seg2 == 'sirkulasi') ? 'active' : ''; ?>">Monitoring Sirkulasi</a>
+        <a href="<?php echo base_url('kepalalab/laporan_rekap'); ?>" class="<?php echo ($seg2 == 'laporan_rekap') ? 'active' : ''; ?>">Menerima Laporan</a>
+        <a href="<?php echo base_url('admin/petugas'); ?>" class="<?php echo ($seg1 == 'admin' && $seg2 == 'petugas') ? 'active' : ''; ?>">Input Petugas Baru</a>
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
     <?php endif; ?>
 
     <a href="<?php echo base_url('auth/logout'); ?>" onclick="return confirm('Apakah Anda yakin ingin keluar dari sistem?');" style="color: #ff6b6b; margin-top: 20px; border-top: 1px solid #444; padding-top: 15px;">

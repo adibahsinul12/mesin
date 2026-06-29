@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
@@ -115,3 +116,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
+=======
+</div> <footer>
+        &copy; <?php echo date('Y'); ?> - <strong>Sistem Peminjaman Alat Lab Teknik Mesin</strong> Jurusan Manajemen Informatika Poltesa. All Rights Reserved.
+    </footer>
+</div> </div> </body>
+</html>
+>>>>>>> 4efcef41079c5f43d6756666ee25cf08716694c0
